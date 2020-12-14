@@ -20,18 +20,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Auth0ProviderWithHistory from "./auth/Auth0ProviderWithHistory";
 import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.2.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
-import App from "./App"
+import store from "./redux-store/store";
+import App from "./App";
 
 ReactDOM.render(
   <Router>
     <Auth0ProviderWithHistory>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </Auth0ProviderWithHistory>
   </Router>,
   document.getElementById("root")

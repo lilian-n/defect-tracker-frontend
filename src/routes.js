@@ -22,7 +22,7 @@ import Icons from "views/Icons";
 import Typography from "views/Typography";
 import TableList from "views/Tables";
 import UserPage from "views/User";
-import Projects from "views/Projects";
+import AdminProjects from "views/Projects/Admin";
 import AdminDefects from "views/Defects/Admin";
 
 var routes = [
@@ -72,7 +72,7 @@ var routes = [
     path: "/projects",
     name: "Projects",
     icon: "nc-umbrella-13",
-    component: Projects,
+    component: AdminProjects,
     layout: "/admin"
   },
   {
