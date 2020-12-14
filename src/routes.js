@@ -16,14 +16,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "views/Dashboard.js";
-import Notifications from "views/Notifications.js";
-import Icons from "views/Icons.js";
-import Typography from "views/Typography.js";
-import TableList from "views/Tables.js";
-import UserPage from "views/User.js";
-import Projects from "views/Projects.js";
-import AdminDefects from "views/AdminDefects.js";
+import Dashboard from "views/Dashboard";
+import Notifications from "views/Notifications";
+import Icons from "views/Icons";
+import Typography from "views/Typography";
+import TableList from "views/Tables";
+import UserPage from "views/User";
+import Projects from "views/Projects";
+import AdminDefects from "views/Defects/Admin";
 
 var routes = [
   {
