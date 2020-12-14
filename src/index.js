@@ -18,7 +18,7 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
+import Auth0ProviderWithHistory from "./auth/Auth0ProviderWithHistory";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -28,11 +28,11 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import App from "./App"
 
-const hist = createBrowserHistory();
-
 ReactDOM.render(
-  <Router history={hist}>
-    <App />
+  <Router>
+    <Auth0ProviderWithHistory>
+      <App />
+    </Auth0ProviderWithHistory>
   </Router>,
   document.getElementById("root")
 );
