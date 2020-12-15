@@ -24,7 +24,8 @@ export const fetchAllProjects = createAsyncThunk(
 // tacking on user array
 export const addProject = createAsyncThunk(
   "projects/add",
-  async (newProject, token) => {
+  async (newValues) => {
+    const { token, ...newProject } = newValues;
     const response = await projectAPI.create(newProject, token);
     const projectToAdd = {
       ...response.data,

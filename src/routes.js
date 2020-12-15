@@ -71,14 +71,14 @@ var routes = [
   {
     path: "/projects",
     name: "Projects",
-    icon: "nc-umbrella-13",
+    icon: "nc-icon nc-umbrella-13",
     component: AdminProjects,
     layout: "/admin"
   },
   {
     path: "/defects",
     name: "Defects",
-    icon: "nc-tile-56",
+    icon: "nc-icon nc-tile-56",
     component: AdminDefects,
     layout: "/admin"
   },
