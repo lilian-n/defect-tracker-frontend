@@ -2,7 +2,7 @@ import React from "react";
 import { Spinner } from "reactstrap";
 
 const Loading = () => (
-  <div>
+  <div className="content">
     <Spinner style={{ width: '5rem', height: '5rem' }} />
   </div>
 );
