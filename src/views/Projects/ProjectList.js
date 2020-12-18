@@ -22,7 +22,7 @@ const Projects = () => {
       .then(token => {
         dispatch(fetchAllProjects(token))
       })
-  }, [])
+  }, [getAccessTokenSilently, dispatch])
 
   return (
     <div className="content container">
