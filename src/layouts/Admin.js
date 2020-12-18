@@ -21,13 +21,16 @@ import React from "react";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch } from "react-router-dom";
 
+import ProtectedRoute from "auth/ProtectedRoute";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "routes.js";
+import { dashboardRoutes, individualRoutes } from "../routes";
 
 var ps;
+
+const allRoutes = [...individualRoutes, ...dashboardRoutes];
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -67,16 +70,17 @@ class Dashboard extends React.Component {
       <div className="wrapper">
         <Sidebar
           {...this.props}
-          routes={routes}
+          routes={dashboardRoutes}
           bgColor={this.state.backgroundColor}
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref={this.mainPanel}>
           <DemoNavbar {...this.props} />
           <Switch>
-            {routes.map((prop, key) => {
+            {allRoutes.map((prop, key) => {
               return (
-                <Route
+                <ProtectedRoute
+                  exact
                   path={prop.layout + prop.path}
                   component={prop.component}
                   key={key}

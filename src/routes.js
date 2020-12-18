@@ -22,10 +22,12 @@ import Icons from "views/Icons";
 import Typography from "views/Typography";
 import TableList from "views/Tables";
 import UserPage from "views/User";
-import AdminProjects from "views/Projects/Admin";
-import AdminDefects from "views/Defects/Admin";
+import ProjectList from "views/Projects/ProjectList";
+import SingleProject from "views/Projects/SingleProject";
+import AdminDefects from "views/Defects/AdminDefects";
+import SingleDefect from "views/Defects/SingleDefect";
 
-var routes = [
+export const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -72,7 +74,7 @@ var routes = [
     path: "/projects",
     name: "Projects",
     icon: "nc-icon nc-umbrella-13",
-    component: AdminProjects,
+    component: ProjectList,
     layout: "/admin"
   },
   {
@@ -83,4 +85,21 @@ var routes = [
     layout: "/admin"
   },
 ];
-export default routes;
+
+export default dashboardRoutes;
+
+export const individualRoutes = [
+  {
+    path: "/projects/:id",
+    name: "Single Project",
+    component: SingleProject,
+    layout: "/admin"
+  },
+  {
+    path: "/defects/:id",
+    name: "Single Defect",
+    component: SingleDefect,
+    layout: "/admin"
+  }
+];
+
