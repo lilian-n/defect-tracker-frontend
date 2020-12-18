@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import { fetchAllProjects } from "./redux-store/projectSlice";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Loading from "./components/Loading"
@@ -8,11 +11,17 @@ import Home from "views/Home";
 import AdminLayout from "layouts/Admin";
 
 const App = () => {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const dispatch = useDispatch();
 
-  if (!isAuthenticated) {
-    return <Route path="/" component={Home} />;
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      getAccessTokenSilently()
+        .then(token => {
+          dispatch(fetchAllProjects(token))
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently, dispatch]);
 
   if (isLoading) {
     return <Loading />;
@@ -22,7 +31,7 @@ const App = () => {
     <div>
       <Switch>
         <ProtectedRoute path="/admin" component={AdminLayout} />
-        <Redirect to="/admin/dashboard" />
+        <Route exact path="/" component={Home} />;
       </Switch>
     </div>
   );
