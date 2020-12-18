@@ -10,7 +10,7 @@ const ProjectTable = ({ data }) => (
       {
         title: 'Id',
         field: 'id',
-        render: rowData => <Link to={`admin/projects/${rowData.id}`}>{rowData.id}</Link>,
+        render: rowData => <Link to={`projects/${rowData.id}`}>{rowData.id}</Link>,
         maxWidth: 50
       },
       { title: 'Title', field: 'title', maxWidth: 100 },
