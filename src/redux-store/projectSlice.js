@@ -5,6 +5,7 @@ import {
   createSelector
 } from "@reduxjs/toolkit";
 import { normalize } from "normalizr";
+
 import { projectSchema } from "./schemas";
 import projectAPI from "../services/projects";
 
@@ -15,6 +16,19 @@ export const fetchAllProjects = createAsyncThunk(
   async (token) => {
     const response = await projectAPI.getAll(token);
     const normalized = normalize(response.data, [projectSchema]);
+
+    return normalized.entities;
+  }
+);
+
+export const fetchOneProject = createAsyncThunk(
+  "projects/fetchOne",
+  async (values) => {
+    const { token, projectId } = values;
+
+    const response = await projectAPI.getOne(projectId, token);
+    const normalized = normalize(response.data, projectSchema);
+
     return normalized.entities;
   }
 );
@@ -54,6 +68,17 @@ const projectSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
+    [fetchOneProject.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [fetchOneProject.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      projectAdapter.upsertMany(state, action.payload.projects);
+    },
+    [fetchOneProject.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
     [addProject.fulfilled]: (state, action) => {
       projectAdapter.addOne(state, action.payload);
     },
@@ -72,3 +97,21 @@ export const {
   selectAll: selectAllProjects,
   selectTotal: selectTotalProjects
 } = projectAdapter.getSelectors(state => state.projects);
+
+export const selectDefectsByProjectId = projectId =>
+  createSelector(
+    [
+      state => selectProjectById(state, projectId),
+      state => state.defects.ids.map(id => state.defects.entities[id])
+    ],
+    (project, defects) => {
+      if (!project) {
+        return [];
+      }
+
+      return Object.keys(defects)
+        .map(d => defects[d])
+        .filter(defect => project.defects.includes(defect.id));
+    }
+  );
+
