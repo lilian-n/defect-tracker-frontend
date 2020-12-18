@@ -12,6 +12,14 @@ async function getAll(token) {
   return axios.get(baseUrl, config);
 }
 
+async function getOne(id, token) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
+
+  return axios.get(`${baseUrl}/${id}`, config);
+}
+
 async function create(newObject, token) {
   const config = {
     headers: { Authorization: `Bearer ${token}` }
@@ -22,5 +30,6 @@ async function create(newObject, token) {
 
 export default {
   getAll,
+  getOne,
   create,
 };
