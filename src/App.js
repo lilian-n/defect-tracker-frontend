@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -9,6 +9,8 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import Loading from "./components/Loading"
 import Home from "views/Home";
 import AdminLayout from "layouts/Admin";
+
+import "./app.css";
 
 const App = () => {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
