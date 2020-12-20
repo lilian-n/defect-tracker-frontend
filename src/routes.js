@@ -26,6 +26,7 @@ import ProjectList from "views/Projects/ProjectList";
 import SingleProject from "views/Projects/SingleProject";
 import AdminDefects from "views/Defects/AdminDefects";
 import SingleDefect from "views/Defects/SingleDefect";
+import UserList from "views/Users/UserList";
 
 export const dashboardRoutes = [
   {
@@ -84,6 +85,13 @@ export const dashboardRoutes = [
     component: AdminDefects,
     layout: "/admin"
   },
+  {
+    path: "/users",
+    name: "Users",
+    icon: "nc-icon nc-circle-10",
+    component: UserList,
+    layout: "/admin"
+  }
 ];
 
 export default dashboardRoutes;
