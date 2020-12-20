@@ -4,7 +4,7 @@ import axios from "axios";
 
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/api/projects`;
 
-async function getAll(token) {
+function getAll(token) {
   const config = {
     headers: { Authorization: `Bearer ${token}` }
   };
@@ -12,7 +12,7 @@ async function getAll(token) {
   return axios.get(baseUrl, config);
 }
 
-async function getOne(id, token) {
+function getOne(id, token) {
   const config = {
     headers: { Authorization: `Bearer ${token}` }
   };
@@ -20,7 +20,7 @@ async function getOne(id, token) {
   return axios.get(`${baseUrl}/${id}`, config);
 }
 
-async function create(newObject, token) {
+function create(newObject, token) {
   const config = {
     headers: { Authorization: `Bearer ${token}` }
   };
@@ -28,8 +28,19 @@ async function create(newObject, token) {
   return axios.post(baseUrl, newObject, config);
 }
 
+function update(id, updateObject, token) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
+
+  return axios.put(`${baseUrl}/${id}`, updateObject, config);
+}
+
+
+
 export default {
   getAll,
   getOne,
   create,
+  update
 };
