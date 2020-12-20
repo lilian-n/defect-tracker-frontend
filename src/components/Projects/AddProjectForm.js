@@ -12,7 +12,6 @@ import {
   Label,
   Input
 } from "reactstrap";
-
 import DatePicker from "../DatePicker";
 
 const AddProjectForm = ({ open, setOpen }) => {
