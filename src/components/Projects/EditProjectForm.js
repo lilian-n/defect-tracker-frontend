@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  FormGroup,
+  Label,
+  Input
+} from "reactstrap";
+import DatePicker from "../DatePicker";
 
 import { updateProject } from "../../redux-store/projectSlice";
 
@@ -10,8 +21,8 @@ const EditProjectForm = ({ open, setOpen, project }) => {
 
   const [title, setTitle] = useState(project.title);
   const [description, setDescription] = useState(project.description);
-  const [startDate, setStartDate] = useState(project.startDate);
-  const [targetEndDate, setTargetEndDate] = useState(project.targetEndDate);
+  const [startDate, setStartDate] = useState(new Date(project.startDate));
+  const [targetEndDate, setTargetEndDate] = useState(new Date(project.targetEndDate));
   const [actualEndDate, setActualEndDate] = useState(project.actualEndDate);
 
   function handleClose() {
@@ -20,6 +31,19 @@ const EditProjectForm = ({ open, setOpen, project }) => {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    getAccessTokenSilently()
+      .then(token => {
+        const updateValues = {
+          token,
+          title,
+          description,
+          startDate,
+          targetEndDate,
+          actualEndDate
+        };
+        dispatch(updateProject(updateValues));
+      });
   }
 
   return (
@@ -62,7 +86,7 @@ const EditProjectForm = ({ open, setOpen, project }) => {
 
           <FormGroup>
             <Label for="targetEndDatePicker">Actual End Date</Label>
-            <DatePicker id="targetEndDatePicker" date={actualEndDate} setDate={setTargetEndDate} />
+            <DatePicker id="targetEndDatePicker" date={actualEndDate} setDate={setActualEndDate} />
           </FormGroup>
         </ModalBody>
 
@@ -74,3 +98,5 @@ const EditProjectForm = ({ open, setOpen, project }) => {
     </Modal>
   )
 }
+
+export default EditProjectForm;
