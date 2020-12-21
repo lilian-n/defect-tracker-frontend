@@ -36,6 +36,7 @@ const EditProjectForm = ({ open, setOpen, project }) => {
       .then(token => {
         const updateValues = {
           token,
+          id: project.id,
           title,
           description,
           startDate,
