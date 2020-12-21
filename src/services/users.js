@@ -3,7 +3,6 @@ import axios from "axios";
 const baseUrl = `${process.env.REACT_APP_SERVER_URL}/api/users`;
 
 function getAll(token) {
-  console.log('token from services', token)
   const config = { headers: { Authorization: `Bearer ${token}` } };
   return axios.get(baseUrl, config);
 }
