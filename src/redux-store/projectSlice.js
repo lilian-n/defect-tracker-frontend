@@ -56,7 +56,7 @@ export const updateProject = createAsyncThunk(
     const { token, ...updateProjectValues } = updateValues;
 
     try {
-      const response = await projectAPI.update(id, updateValues, token);
+      const response = await projectAPI.update(id, updateProjectValues, token);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

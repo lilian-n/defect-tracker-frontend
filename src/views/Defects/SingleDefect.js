@@ -29,14 +29,14 @@ const SingleDefect = () => {
         dispatch(fetchOneDefect(fetchValues))
       })
       .then()
-  }, [getAccessTokenSilently, dispatch])
+  }, [getAccessTokenSilently, dispatch, id])
 
   let projectIdForDefect = defect ? defect.projectId : "";
   const project = useSelector(state => selectProjectById(state, projectIdForDefect));
 
   let projectTitle = project ? project.title : "";
 
-  if (status == "failed") {
+  if (status === "failed") {
     return (
       <div className="content container">{error}</div>
     )

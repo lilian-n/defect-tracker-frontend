@@ -64,148 +64,144 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
 
         <ModalBody>
           <Row>
-            <Col md="12">
-              <Row>
-                <Col md="12" lg="4">
-                  <FormGroup>
-                    <b><Label for="defectSummary">Summary</Label></b>
-                    <Input
-                      type="text"
-                      name="defectSummary"
-                      id="defectSummary"
-                      value={summary}
-                      onChange={e => setSummary(e.target.value)}
-                    />
-                  </FormGroup>
-                </Col>
+            <Col md="12" lg="4">
+              <FormGroup>
+                <b><Label for="defectSummary">Summary</Label></b>
+                <Input
+                  type="text"
+                  name="defectSummary"
+                  id="defectSummary"
+                  value={summary}
+                  onChange={e => setSummary(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
 
-                <Col md="6" lg="4">
-                  <FormGroup>
-                    <b><Label for="identifier">Identifier</Label></b>
-                    <Input
-                      type="text"
-                      disabled
-                      name="identifier"
-                      id="identifier"
-                      value={identifier}
-                    />
-                  </FormGroup>
-                </Col>
+            <Col md="6" lg="4">
+              <FormGroup>
+                <b><Label for="identifier">Identifier</Label></b>
+                <Input
+                  type="text"
+                  disabled
+                  name="identifier"
+                  id="identifier"
+                  value={identifier}
+                />
+              </FormGroup>
+            </Col>
 
-                <Col md="6" lg="4">
-                  <FormGroup>
-                    <b><Label for="assignedDev">Assigned Developer</Label></b>
-                    <Input
-                      type="text"
-                      name="assignedDev"
-                      id="assignedDev"
-                      value={summary}
-                      onChange={e => setSummary(e.target.value)}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+            <Col md="6" lg="4">
+              <FormGroup>
+                <b><Label for="assignedDev">Assigned Developer</Label></b>
+                <Input
+                  type="text"
+                  name="assignedDev"
+                  id="assignedDev"
+                  value={summary}
+                  onChange={e => setSummary(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-              <Row>
-                <Col md="6" lg="4">
-                  <FormGroup>
-                    <b><Label for="defectStatus">Status</Label></b>
-                    <Input
-                      type="select"
-                      name="defectStatus"
-                      id="defectStatus"
-                      value={status}
-                      onChange={e => setStatus(e.target.value)}
-                    >
-                      <option value="OPEN">OPEN</option>
-                      <option value="CLOSED">CLOSED</option>
-                    </Input>
-                  </FormGroup>
-                </Col>
+          <Row>
+            <Col md="6" lg="4">
+              <FormGroup>
+                <b><Label for="defectStatus">Status</Label></b>
+                <Input
+                  type="select"
+                  name="defectStatus"
+                  id="defectStatus"
+                  value={status}
+                  onChange={e => setStatus(e.target.value)}
+                >
+                  <option value="OPEN">OPEN</option>
+                  <option value="CLOSED">CLOSED</option>
+                </Input>
+              </FormGroup>
+            </Col>
 
-                <Col md="6" lg="4">
-                  <FormGroup>
-                    <b><Label for="priority">Priority</Label></b>
-                    <Input
-                      type="select"
-                      name="priority"
-                      id="priority"
-                      value={priority}
-                      onChange={e => setPriority(e.target.value)}
-                    >
-                      <option value="">None</option>
-                      <option value="Low">Low</option>
-                      <option value="Medium">Medium</option>
-                      <option value="High">High</option>
-                      <option value="Immediate">Immediate</option>
-                    </Input>
-                  </FormGroup>
-                </Col>
+            <Col md="6" lg="4">
+              <FormGroup>
+                <b><Label for="priority">Priority</Label></b>
+                <Input
+                  type="select"
+                  name="priority"
+                  id="priority"
+                  value={priority}
+                  onChange={e => setPriority(e.target.value)}
+                >
+                  <option value="">None</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Immediate">Immediate</option>
+                </Input>
+              </FormGroup>
+            </Col>
 
-                <Col md="12" lg="4">
-                  <FormGroup>
-                    <b><Label for="projectForDefect">Associated Project</Label></b>
-                    <Input
-                      type="text"
-                      disabled
-                      name="projectForDefect"
-                      id="projectForDefect"
-                      value={projectTitle}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+            <Col md="12" lg="4">
+              <FormGroup>
+                <b><Label for="projectForDefect">Associated Project</Label></b>
+                <Input
+                  type="text"
+                  disabled
+                  name="projectForDefect"
+                  id="projectForDefect"
+                  value={projectTitle}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <b><Label for="dateIdentified">Date Identified</Label></b>
-                    <DatePicker id="dateIdentified" date={dateIdentified} setDate={setDateIdentified} />
-                  </FormGroup>
-                </Col>
+          <Row>
+            <Col>
+              <FormGroup>
+                <b><Label for="dateIdentified">Date Identified</Label></b>
+                <DatePicker id="dateIdentified" date={dateIdentified} setDate={setDateIdentified} />
+              </FormGroup>
+            </Col>
 
-                <Col md="6" lg="4">
-                  <FormGroup>
-                    <b><Label for="defectTargetDate">Target Resolution Date</Label></b>
-                    <DatePicker id="defectTargetDate" date={targetResDate} setDate={setTargetResDate} />
-                  </FormGroup>
-                </Col>
+            <Col md="6" lg="4">
+              <FormGroup>
+                <b><Label for="defectTargetDate">Target Resolution Date</Label></b>
+                <DatePicker id="defectTargetDate" date={targetResDate} setDate={setTargetResDate} />
+              </FormGroup>
+            </Col>
 
-                <Col md="12" lg="4">
-                  <FormGroup>
-                    <b><Label for="defectEndDate">Actual End Date</Label></b>
-                    <DatePicker id="defectEndDate" date={actualEndDate} setDate={setActualEndDate} />
-                  </FormGroup>
-                </Col>
-              </Row>
+            <Col md="12" lg="4">
+              <FormGroup>
+                <b><Label for="defectEndDate">Actual End Date</Label></b>
+                <DatePicker id="defectEndDate" date={actualEndDate} setDate={setActualEndDate} />
+              </FormGroup>
+            </Col>
+          </Row>
 
-              <Row>
-                <Col xs="12">
-                  <FormGroup>
-                    <b><Label for="defectDescription">Detailed Description</Label></b>
-                    <Input
-                      type="textarea"
-                      name="defectDescription"
-                      id="defectDescription"
-                      value={description}
-                      onChange={e => setDescription(e.target.value)}
-                    />
-                  </FormGroup>
-                </Col>
+          <Row>
+            <Col xs="12">
+              <FormGroup>
+                <b><Label for="defectDescription">Detailed Description</Label></b>
+                <Input
+                  type="textarea"
+                  name="defectDescription"
+                  id="defectDescription"
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
 
-                <Col xs="12">
-                  <FormGroup>
-                    <b><Label for="progress">Progress</Label></b>
-                    <Input
-                      type="textarea"
-                      name="progress"
-                      id="progress"
-                      value={progress}
-                      onChange={e => setProgress(e.target.value)}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+            <Col xs="12">
+              <FormGroup>
+                <b><Label for="progress">Progress</Label></b>
+                <Input
+                  type="textarea"
+                  name="progress"
+                  id="progress"
+                  value={progress}
+                  onChange={e => setProgress(e.target.value)}
+                />
+              </FormGroup>
             </Col>
           </Row>
         </ModalBody>

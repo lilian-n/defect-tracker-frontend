@@ -38,7 +38,6 @@ export const fetchOneDefect = createAsyncThunk(
   "defects/fetchOne",
   async (fetchValues) => {
     const { defectId, token } = fetchValues;
-    console.log('I get here')
     const response = await defectAPI.getById(defectId, token);
     const normalized = normalize(response.data, defectSchema);
 
@@ -51,7 +50,7 @@ export const addDefect = createAsyncThunk(
   async (newValues) => {
     const { token, ...newDefect } = newValues;
 
-    const response = await defectAPI.create(newDefect);
+    const response = await defectAPI.create(newDefect, token);
     const defectToAdd = { ...response.data, comments: [] }
 
     return defectToAdd;
@@ -124,7 +123,11 @@ const defectSlice = createSlice({
       state.error = action.error.message;
     },
     [addDefect.fulfilled]: (state, action) => {
+      console.log("action", action.payload);
       defectAdapter.addOne(state, action.payload);
+    },
+    [addDefect.rejected]: (state, action) => {
+      state.error = action.error.message;
     },
     [updateDefect.fulfilled]: (state, action) => {
       defectAdapter.upsertOne(state, action.payload)

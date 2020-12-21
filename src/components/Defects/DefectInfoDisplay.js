@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Card, CardHeader, CardBody, Row, Col } from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 
 const DefectInfoDisplay = ({ defect, projectTitle }) => (
   <Row>
