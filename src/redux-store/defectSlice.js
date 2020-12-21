@@ -123,7 +123,6 @@ const defectSlice = createSlice({
       state.error = action.error.message;
     },
     [addDefect.fulfilled]: (state, action) => {
-      console.log("action", action.payload);
       defectAdapter.addOne(state, action.payload);
     },
     [addDefect.rejected]: (state, action) => {

@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { normalize } from "normalizr";
 
+import { addDefect, deleteDefect } from "./defectSlice";
 import { projectSchema } from "./schemas";
 import projectAPI from "../services/projects";
 
@@ -102,6 +103,16 @@ const projectSlice = createSlice({
     },
     [updateProject.fulfilled]: (state, action) => {
       projectAdapter.upsertOne(state, action.payload);
+    },
+    [addDefect.fulfilled]: (state, action) => {
+      const id = action.payload.projectId;
+      const defectId = action.payload.id;
+      state.entities[id].defects = state.entities[id].defects.concat(defectId);
+    },
+    [deleteDefect.fulfilled]: (state, action) => {
+      const id = action.payload.projectId;
+      const defectId = action.payload.id;
+      state.entities[id].defects = state.entities[id].defects.filter(id => id !== defectId);
     }
   }
 })
