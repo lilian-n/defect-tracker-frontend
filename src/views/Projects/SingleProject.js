@@ -13,7 +13,7 @@ import EditProjectForm from "../../components/Projects/EditProjectForm";
 // Need DeleteProject, UserTable
 
 const SingleProject = () => {
-  const id = useParams().id;
+  const id = Number(useParams().id);
   const { getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
 
