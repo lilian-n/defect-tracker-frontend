@@ -35,7 +35,7 @@ const ProjectList = () => {
             size="sm"
             style={{ height: 40 }}
           >
-            Add Project
+            Add New Project
             </Button>
         </Col>
       </Row>

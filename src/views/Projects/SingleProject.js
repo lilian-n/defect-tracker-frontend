@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Row, Col, Button } from "reactstrap";
 
 import { fetchOneProject, selectProjectById } from "../../redux-store/projectSlice";
@@ -30,10 +30,10 @@ const SingleProject = () => {
         let fetchValues = { token, projectId: id };
         dispatch(fetchOneProject(fetchValues));
       })
-  }, [getAccessTokenSilently, dispatch]);
+  }, [getAccessTokenSilently, dispatch, id]);
 
 
-  if (status == "failed") {
+  if (status === "failed") {
     return (
       <div className="content container">
         <p>{error}</p>
