@@ -65,6 +65,17 @@ export const updateProject = createAsyncThunk(
   }
 );
 
+export const deleteProject = createAsyncThunk(
+  "projects/delete",
+  async (projectValues) => {
+    const { token, id } = projectValues;
+
+    await projectAPI.remove(id, token);
+
+    return projectValues;
+  }
+)
+
 const projectSlice = createSlice({
   name: "projects",
   initialState: projectAdapter.getInitialState({
@@ -103,6 +114,9 @@ const projectSlice = createSlice({
     },
     [updateProject.fulfilled]: (state, action) => {
       projectAdapter.upsertOne(state, action.payload);
+    },
+    [deleteProject.fulfilled]: (state, action) => {
+      projectAdapter.removeOne(state, action.payload.id);
     },
     [addDefect.fulfilled]: (state, action) => {
       const id = action.payload.projectId;

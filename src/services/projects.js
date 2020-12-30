@@ -24,11 +24,17 @@ function update(id, updateObject, token) {
   return axios.put(`${baseUrl}/${id}`, updateObject, config);
 }
 
+function remove(id, token) {
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+  return axios.delete(`${baseUrl}/${id}`, config);
+}
+
 
 
 export default {
   getAll,
   getOne,
   create,
-  update
+  update,
+  remove
 };
