@@ -64,7 +64,7 @@ export const updateDefect = createAsyncThunk(
     const { id } = updateValues;
 
     try {
-      const response = await defectAPI.update(id, updateDefectValues);
+      const response = await defectAPI.update(id, updateDefectValues, token);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -134,7 +134,7 @@ const defectSlice = createSlice({
     [deleteDefect.fulfilled]: (state, action) => {
       defectAdapter.removeOne(state, action.payload.id)
     },
-    // need to include deleteProject
+    // include deleteProject action
   }
 });
 
