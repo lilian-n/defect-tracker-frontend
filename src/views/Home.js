@@ -1,12 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import Hero from "../components/Home/Hero";
 
 const Home = () => (
-  <Fragment>
+  <div className="full-height">
     <Hero />
-    <hr />
-  </Fragment>
+  </div>
 );
 
 export default Home;
