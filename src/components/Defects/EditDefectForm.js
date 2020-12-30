@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useForm, Controller } from "react-hook-form";
 import {
   Modal,
   ModalHeader,
@@ -20,6 +21,7 @@ import { updateDefect } from "../../redux-store/defectSlice";
 const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
+  const { register, errors, handleSubmit } = useForm();
 
   const [summary, setSummary] = useState(defect.summary);
   const [description, setDescription] = useState(defect.description);
@@ -34,15 +36,15 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
   let identifier = "Goober McGooberton";
 
   function handleClose() {
+    // Needs to reset fields
     setOpen(false);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
+  function onSubmit() {
     getAccessTokenSilently()
       .then(token => {
         const updateValues = {
+          id: defect.id,
           token,
           summary,
           description,
@@ -55,11 +57,12 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
         };
         dispatch(updateDefect(updateValues));
       });
+    setOpen(false);
   }
 
   return (
-    <Modal isOpen={open} toggle={handleClose} size="xl">
-      <form onSubmit={handleSubmit}>
+    <Modal isOpen={open} toggle={handleClose} backdrop="static" size="xl">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <ModalHeader toggle={handleClose}>Edit Defect #{defect.id}</ModalHeader>
 
         <ModalBody>
@@ -73,7 +76,9 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
                   id="defectSummary"
                   value={summary}
                   onChange={e => setSummary(e.target.value)}
+                  innerRef={register({ required: true })}
                 />
+                <p style={{ color: "red" }}>{errors.defectSummary && "Summary is required."}</p>
               </FormGroup>
             </Col>
 
@@ -114,10 +119,12 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
                   id="defectStatus"
                   value={status}
                   onChange={e => setStatus(e.target.value)}
+                  innerRef={register({ required: true })}
                 >
                   <option value="OPEN">OPEN</option>
                   <option value="CLOSED">CLOSED</option>
                 </Input>
+                <p style={{ color: "red" }}>{errors.defectStatus && "Status is required."}</p>
               </FormGroup>
             </Col>
 
@@ -156,6 +163,7 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
 
           <Row>
             <Col>
+              {/* required input here */}
               <FormGroup>
                 <b><Label for="dateIdentified">Date Identified</Label></b>
                 <DatePicker id="dateIdentified" date={dateIdentified} setDate={setDateIdentified} />
@@ -208,7 +216,7 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
 
         <ModalFooter>
           <Button color="danger" onClick={handleClose}>Cancel</Button>
-          <Button color="info" onClick={handleSubmit}>Submit</Button>
+          <Button color="info" type="submit">Submit</Button>
         </ModalFooter>
       </form>
     </Modal>

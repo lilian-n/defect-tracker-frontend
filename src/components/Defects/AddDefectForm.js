@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useForm, Controller } from "react-hook-form";
 import {
   Modal,
   ModalHeader,
@@ -8,6 +9,7 @@ import {
   ModalFooter,
   Button,
   FormGroup,
+  FormText,
   Label,
   Input,
   Row,
@@ -20,6 +22,7 @@ import { addDefect } from "../../redux-store/defectSlice";
 const AddDefectForm = ({ open, setOpen, project }) => {
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
+  const { register, errors, handleSubmit, control } = useForm();
 
   const projectId = project.id;
   const projectTitle = project.title;
@@ -39,9 +42,7 @@ const AddDefectForm = ({ open, setOpen, project }) => {
     setOpen(false);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
+  function onSubmit() {
     getAccessTokenSilently()
       .then(token => {
         const newValues = {
@@ -66,8 +67,8 @@ const AddDefectForm = ({ open, setOpen, project }) => {
   }
 
   return (
-    <Modal isOpen={open} toggle={handleClose}>
-      <form onSubmit={handleSubmit}>
+    <Modal isOpen={open} toggle={handleClose} backdrop="static">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <ModalHeader toggle={handleClose}>Add New Defect</ModalHeader>
 
         <ModalBody>
@@ -94,7 +95,12 @@ const AddDefectForm = ({ open, setOpen, project }) => {
                   id="defectSummary"
                   value={summary}
                   onChange={e => setSummary(e.target.value)}
+                  innerRef={register({ required: true })}
                 />
+                <FormText color="muted">
+                  Required
+                </FormText>
+                <p style={{ color: "red" }}>{errors.defectSummary && "Defect summary is required."}</p>
               </FormGroup>
             </Col>
 
@@ -108,6 +114,17 @@ const AddDefectForm = ({ open, setOpen, project }) => {
                   value={description}
                   onChange={e => setDescription(e.target.value)}
                 />
+              </FormGroup>
+            </Col>
+
+            <Col xs="12">
+              {/** This field is required as well */}
+              <FormGroup>
+                <b><Label for="dateIdentified">Date Identified</Label></b>
+                <DatePicker id="dateIdentified" date={dateIdentified} setDate={setDateIdentified} />
+                <FormText color="muted">
+                  Required
+                </FormText>
               </FormGroup>
             </Col>
 
@@ -132,13 +149,6 @@ const AddDefectForm = ({ open, setOpen, project }) => {
 
             <Col xs="12">
               <FormGroup>
-                <b><Label for="dateIdentified">Date Identified</Label></b>
-                <DatePicker id="dateIdentified" date={dateIdentified} setDate={setDateIdentified} />
-              </FormGroup>
-            </Col>
-
-            <Col xs="12">
-              <FormGroup>
                 <b><Label for="defectTargetDate">Target Resolution Date</Label></b>
                 <DatePicker id="defectTargetDate" date={targetResDate} setDate={setTargetResDate} />
               </FormGroup>
@@ -148,7 +158,7 @@ const AddDefectForm = ({ open, setOpen, project }) => {
 
         <ModalFooter>
           <Button color="danger" onClick={handleClose}>Cancel</Button>
-          <Button color="info" onClick={handleSubmit}>Submit</Button>
+          <Button color="info" type="submit">Submit</Button>
         </ModalFooter>
       </form>
     </Modal>
