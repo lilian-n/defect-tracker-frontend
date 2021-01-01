@@ -13,13 +13,16 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import Loading from "./components/Loading"
 import Home from "views/Home";
 import AdminLayout from "layouts/Admin";
+import SignupForm from "./components/Users/UserSignupForm";
 
 import "./app.css";
+
 
 const App = () => {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.authUser.data);
+  console.log("🚀 ~ file: App.js ~ line 23 ~ App ~ authUser", authUser)
 
   // Set localizer for date pickers
   Moment.locale("en");
@@ -43,11 +46,8 @@ const App = () => {
     <div>
       <Switch>
         <Route exact path="/" component={Home} />;
-        <Can
-          role={authUser.role}
-          perform="admin-layout:view"
-          yes={() => <ProtectedRoute path="/admin" component={AdminLayout} />}
-        />
+        <Route path="/signup" role={authUser.role} component={SignupForm} />
+        <ProtectedRoute path="/admin" role={authUser.role} component={AdminLayout} />
       </Switch>
     </div>
   );

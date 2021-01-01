@@ -22,8 +22,9 @@ export const fetchAllUsers = createAsyncThunk(
 
 export const addNewUser = createAsyncThunk(
   "users/add",
-  async (newUser, token) => {
-    const response = await userAPI.create(newUser, token);
+  async (newUserValues) => {
+    const { token, ...userValues } = newUserValues;
+    const response = await userAPI.create(userValues, token);
 
     return response.data;
   }
