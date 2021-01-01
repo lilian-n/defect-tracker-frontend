@@ -104,11 +104,7 @@ class Header extends React.Component {
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
       <Navbar
-        color={
-          this.props.location.pathname.indexOf("full-screen-maps") !== -1
-            ? "dark"
-            : this.state.color
-        }
+        color={"dark"}
         expand="lg"
         className={
           this.props.location.pathname.indexOf("full-screen-maps") !== -1
@@ -117,6 +113,9 @@ class Header extends React.Component {
             (this.state.color === "transparent" ? "navbar-transparent " : "")
         }
       >
+        {
+          console.log(this.state.color)
+        }
         <Container fluid>
           <div className="navbar-wrapper">
             <div className="navbar-toggle">
