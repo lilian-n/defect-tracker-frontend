@@ -7,7 +7,6 @@ import {
   ModalFooter,
   Button,
   FormGroup,
-  Label,
   Input
 } from "reactstrap";
 
