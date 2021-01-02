@@ -8,6 +8,7 @@ import { normalize } from "normalizr";
 
 import { addDefect, deleteDefect } from "./defectSlice";
 import { projectSchema } from "./schemas";
+import { getUserName } from "./helperFunctions";
 import projectAPI from "../services/projects";
 
 const projectAdapter = createEntityAdapter();
@@ -145,16 +146,25 @@ export const selectDefectsByProjectId = projectId =>
   createSelector(
     [
       state => selectProjectById(state, projectId),
-      state => state.defects.ids.map(id => state.defects.entities[id])
+      state => state.defects.ids.map(id => state.defects.entities[id]),
+      state => state.users.ids.map(id => state.users.entities[id]),
     ],
-    (project, defects) => {
+    (project, defects, users) => {
       if (!project) {
         return [];
       }
 
-      return Object.keys(defects)
+      const defectsList = Object.keys(defects)
         .map(d => defects[d])
-        .filter(defect => project.defects.includes(defect.id));
+        .filter(defect => project.defects.includes(defect.id))
+        .map(defect => {
+          return {
+            ...defect,
+            identifierId: getUserName(users, defect.identifierId),
+            assignedDevId: getUserName(users, defect.assignedDevId)
+          }
+        });
+
+      return defectsList;
     }
   );
-
