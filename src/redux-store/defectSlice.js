@@ -7,6 +7,7 @@ import {
 import { normalize } from "normalizr";
 
 import { defectSchema } from "./schemas";
+import { getUserName } from "./helperFunctions";
 import defectAPI from "../services/defects";
 
 const defectAdapter = createEntityAdapter();
@@ -147,5 +148,26 @@ export const {
   selectAll: selectAllDefects,
   selectTotal: selectTotalDefects
 } = defectAdapter.getSelectors(state => state.defects);
+
+export const selectDefect = defectId =>
+  createSelector(
+    [
+      state => selectDefectById(state, defectId),
+      state => state.users.ids.map(id => state.users.entities[id])
+    ],
+    (defect, users) => {
+      console.log('defect', defect)
+      if (!defect) {
+        return null
+      }
+      const hyrdratedDefect = {
+        ...defect,
+        identifierId: getUserName(users, defect.identifierId),
+        assignedDevId: getUserName(users, defect.assignedDevId)
+      };
+
+      return hyrdratedDefect;
+    }
+  )
 
 // include selectCommentsByDefect 
