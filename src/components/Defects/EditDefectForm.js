@@ -33,7 +33,6 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
   const [progress, setProgress] = useState(defect.progress);
 
   // Also need to add developer, identifier information
-  let identifier = "Goober McGooberton";
 
   function handleClose() {
     // Needs to reset fields
@@ -90,7 +89,7 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
                   disabled
                   name="identifier"
                   id="identifier"
-                  value={identifier}
+                  value={defect.identifierId}
                 />
               </FormGroup>
             </Col>

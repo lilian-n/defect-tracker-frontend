@@ -17,11 +17,11 @@ const DefectInfoDisplay = ({ defect, projectTitle }) => (
             </Col>
             <Col xs="6" lg="4">
               <h6>Identifier</h6>
-              <p>{defect.identifier}</p>
+              <p>{defect.identifierId}</p>
             </Col>
             <Col xs="6" md="4">
               <h6>Assigned Developer</h6>
-              <p>{defect.assignedDev}</p>
+              <p>{defect.assignedDevId}</p>
             </Col>
           </Row>
 
@@ -54,7 +54,7 @@ const DefectInfoDisplay = ({ defect, projectTitle }) => (
               <p>{defect.actualResDate}</p>
             </Col>
           </Row>
-
+          <hr></hr>
           <Row>
             <Col xs="12" lg="6">
               <h6>Detailed Description</h6>

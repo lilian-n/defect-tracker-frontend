@@ -16,8 +16,8 @@ const DefectTable = ({ data, projectTitle }) => (
       { title: "Status", field: "status", maxWidth: 70 },
       { title: "Summary", field: "summary" },
       { title: "Priority", field: "priority", maxWidth: 70 },
-      { title: "Identifier", field: "identifier" },
-      { title: "Assigned Developer", field: "assignedDev" },
+      { title: "Identifier", field: "identifierId" },
+      { title: "Assigned Developer", field: "assignedDevId" },
       { title: "Identified Date", field: "dateIdentified", maxWidth: 100 },
       { title: "Target Resolution Date", field: "targetResDate", maxWidth: 100 }
     ]}
