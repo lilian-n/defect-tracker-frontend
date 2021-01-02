@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams, useHistory } from "react-router-dom";
 import { Row, Col, Button } from "reactstrap";
 
-import { fetchOneDefect, selectDefectById, deleteDefect } from "../../redux-store/defectSlice";
+import { fetchOneDefect, selectDefect, deleteDefect } from "../../redux-store/defectSlice";
 import { selectProjectById } from "redux-store/projectSlice";
 
 import Loading from "../../components/Loading";
@@ -17,7 +17,7 @@ const SingleDefect = () => {
   const history = useHistory();
   const { getAccessTokenSilently } = useAuth0();
 
-  const defect = useSelector(state => selectDefectById(state, id));
+  const defect = useSelector(selectDefect(id));
   const status = useSelector(({ defects }) => defects.status);
   const error = useSelector(({ defects }) => defects.error);
 
