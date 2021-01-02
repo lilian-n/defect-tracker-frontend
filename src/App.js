@@ -7,6 +7,7 @@ import momentLocalizer from "react-widgets-moment";
 
 import { fetchAuthUser } from "./redux-store/authUserSlice";
 import { fetchAllProjects } from "./redux-store/projectSlice";
+import { fetchAllUsers } from "redux-store/userSlice";
 
 import Can from "./components/Can";
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -22,7 +23,6 @@ const App = () => {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.authUser.data);
-  console.log("🚀 ~ file: App.js ~ line 23 ~ App ~ authUser", authUser)
 
   // Set localizer for date pickers
   Moment.locale("en");
@@ -34,6 +34,7 @@ const App = () => {
         .then(token => {
           dispatch(fetchAuthUser(token));
           dispatch(fetchAllProjects(token));
+          dispatch(fetchAllUsers(token));
         });
     }
   }, [isAuthenticated, getAccessTokenSilently, dispatch]);
