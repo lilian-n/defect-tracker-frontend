@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../assets/img/bug-icon.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Container } from 'reactstrap';
 

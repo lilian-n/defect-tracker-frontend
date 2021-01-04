@@ -31,7 +31,7 @@ const Header = (props) => {
       document.documentElement.classList.toggle("nav-open");
       sidebarToggle.current.classList.toggle("toggled");
     }
-  }, [updateColor])
+  }, [updateColor, history, location])
 
   function toggle() {
     if (isOpen) {

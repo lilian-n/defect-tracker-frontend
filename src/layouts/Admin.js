@@ -10,20 +10,19 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 import { dashboardRoutes, individualRoutes } from "../routes";
 
-let ps;
-
 const allRoutes = [...individualRoutes, ...dashboardRoutes];
 
 const Dashboard = (props) => {
   const mainPanel = useRef();
   const history = useHistory();
 
+
   const [backgroundColor, setBackgroundColor] = useState("black");
   const [activeColor, setActiveColor] = useState("info");
 
   useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(mainPanel.current);
+      new PerfectScrollbar(mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
     }
     if (history.action === "PUSH") {
@@ -31,14 +30,6 @@ const Dashboard = (props) => {
       document.scrollingElement.scrollTop = 0;
     }
   }, [history])
-
-  function handleActiveClick(color) {
-    setActiveColor(color);
-  }
-
-  function handleBgClick(color) {
-    setBackgroundColor(color);
-  }
 
   return (
     <div className="wrapper">

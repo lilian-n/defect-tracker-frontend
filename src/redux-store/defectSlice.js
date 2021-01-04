@@ -156,7 +156,6 @@ export const selectDefect = defectId =>
       state => state.users.ids.map(id => state.users.entities[id])
     ],
     (defect, users) => {
-      console.log('defect', defect)
       if (!defect) {
         return null
       }

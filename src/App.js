@@ -9,7 +9,6 @@ import { fetchAuthUser } from "./redux-store/authUserSlice";
 import { fetchAllProjects } from "./redux-store/projectSlice";
 import { fetchAllUsers } from "redux-store/userSlice";
 
-import Can from "./components/Can";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Loading from "./components/Loading"
 import Home from "views/Home";
