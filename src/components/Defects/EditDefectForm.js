@@ -18,6 +18,8 @@ import DatePicker from "../DatePicker";
 
 import { updateDefect } from "../../redux-store/defectSlice";
 
+import AssignDevInput from "./AssignDevInput";
+
 const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
@@ -26,6 +28,7 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
   const [summary, setSummary] = useState(defect.summary);
   const [description, setDescription] = useState(defect.description);
   const [status, setStatus] = useState(defect.status);
+  const [dev, setDev] = useState(defect.assignedDevId);
   const [priority, setPriority] = useState(defect.priority);
   const [dateIdentified, setDateIdentified] = useState(new Date(defect.dateIdentified));
   const [targetResDate, setTargetResDate] = useState(new Date(defect.targetResDate));
@@ -40,6 +43,8 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
   }
 
   function onSubmit() {
+    const devInput = dev ? dev.value : null;
+
     getAccessTokenSilently()
       .then(token => {
         const updateValues = {
@@ -47,6 +52,7 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
           token,
           summary,
           description,
+          assignedDevId: devInput,
           status,
           priority,
           dateIdentified,
@@ -97,13 +103,7 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
             <Col md="6" lg="4">
               <FormGroup>
                 <b><Label for="assignedDev">Assigned Developer</Label></b>
-                <Input
-                  type="text"
-                  name="assignedDev"
-                  id="assignedDev"
-                  value={summary}
-                  onChange={e => setSummary(e.target.value)}
-                />
+                <AssignDevInput selection={dev} setSelection={setDev} />
               </FormGroup>
             </Col>
           </Row>
