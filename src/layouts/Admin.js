@@ -16,10 +16,6 @@ const Dashboard = (props) => {
   const mainPanel = useRef();
   const history = useHistory();
 
-
-  const [backgroundColor, setBackgroundColor] = useState("black");
-  const [activeColor, setActiveColor] = useState("info");
-
   useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       new PerfectScrollbar(mainPanel.current);
@@ -36,8 +32,8 @@ const Dashboard = (props) => {
       <Sidebar
         {...props}
         routes={dashboardRoutes}
-        bgColor={backgroundColor}
-        activeColor={activeColor}
+        bgColor={"black"}
+        activeColor={"info"}
       />
       <div className="main-panel" ref={mainPanel}>
         <Navbar {...props} />

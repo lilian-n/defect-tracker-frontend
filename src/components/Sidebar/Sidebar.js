@@ -6,15 +6,13 @@ import PerfectScrollbar from "perfect-scrollbar";
 
 import logo from "logo.svg";
 
-let ps;
-
 const Sidebar = (props) => {
   const sidebar = useRef();
   const location = useLocation();
 
   useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(sidebar.current, {
+      new PerfectScrollbar(sidebar.current, {
         suppressScrollX: true,
         suppressScrollY: false,
       });

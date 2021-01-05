@@ -22,7 +22,6 @@ const Header = (props) => {
   const [color, setColor] = useState("transparent");
 
   useEffect(() => {
-    window.addEventListener("resize", updateColor())
     if (
       window.innerWidth < 993 &&
       history.location.pathname !== location.pathname &&
@@ -31,7 +30,7 @@ const Header = (props) => {
       document.documentElement.classList.toggle("nav-open");
       sidebarToggle.current.classList.toggle("toggled");
     }
-  }, [updateColor, history, location])
+  }, [history, location])
 
   function toggle() {
     if (isOpen) {
@@ -57,14 +56,6 @@ const Header = (props) => {
   function openSidebar() {
     document.documentElement.classList.toggle("nav-open");
     sidebarToggle.current.classList.toggle("toggled");
-  }
-
-  function updateColor() {
-    if (window.innerWidth < 993 && isOpen) {
-      setColor("dark");
-    } else {
-      setColor("transparent");
-    }
   }
 
   return (
