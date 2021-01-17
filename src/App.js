@@ -46,7 +46,7 @@ const App = () => {
     <div>
       <Switch>
         <Route exact path="/" component={Home} />;
-        <Route path="/signup" role={authUser.role} component={SignupForm} />
+        <Route exact path="/signup" role={authUser.role} component={SignupForm} />
         <ProtectedRoute path="/admin" role={authUser.role} component={AdminLayout} />
       </Switch>
     </div>
