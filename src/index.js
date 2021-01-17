@@ -19,7 +19,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Auth0ProviderWithHistory from "./auth/Auth0ProviderWithHistory";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -31,12 +31,12 @@ import store from "./redux-store/store";
 import App from "./App";
 
 ReactDOM.render(
-  <Router>
+  <BrowserRouter>
     <Auth0ProviderWithHistory>
       <Provider store={store}>
         <App />
       </Provider>
     </Auth0ProviderWithHistory>
-  </Router>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
