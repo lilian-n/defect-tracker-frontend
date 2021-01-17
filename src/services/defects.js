@@ -1,6 +1,8 @@
 import axios from "axios";
+import { config } from "./constants";
 
-const baseUrl = `${process.env.REACT_APP_SERVER_URL}/api/defects`;
+const url = config.url.API_URL;
+const baseUrl = `${url}/api/defects`;
 
 function getAll(token) {
   const config = { headers: { Authorization: `Bearer ${token}` } };
