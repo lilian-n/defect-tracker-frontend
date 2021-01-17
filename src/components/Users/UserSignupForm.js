@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import {
   Form,
   FormText,
@@ -32,25 +32,20 @@ const SignupForm = () => {
   const [name, setName] = useState("");
   const [occupation, setOccupation] = useState("");
 
-  function addUser() {
-    getAccessTokenSilently()
-      .then((token) => {
-        const newValues = {
-          token,
-          name,
-          role: "ADMIN",
-          email: user.email,
-          occupation
-        };
+  async function addUser() {
+    const token = await getAccessTokenSilently();
 
-        dispatch(addNewUser(newValues));
-      })
-      .then(() => {
-        dispatch(fetchAuthUser());
-      })
-      .then(() => {
-        history.push("/admin/dashboard");
-      })
+    const newValues = {
+      token,
+      name,
+      role: "ADMIN",
+      email: user.email,
+      occupation
+    };
+
+    await dispatch(addNewUser(newValues));
+    await dispatch(fetchAuthUser(token));
+    await history.push("/admin/dashboard");
   }
 
   return (
