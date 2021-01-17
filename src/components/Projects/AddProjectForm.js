@@ -33,7 +33,7 @@ const AddProjectForm = ({ open, setOpen }) => {
     setTitle("");
     setDescription("");
     setStartDate(new Date());
-    setTargetEndDate(new Date());
+    setTargetEndDate(null);
     setOpen(false);
   }
 
@@ -53,7 +53,7 @@ const AddProjectForm = ({ open, setOpen }) => {
     setTitle("");
     setDescription("");
     setStartDate(new Date());
-    setTargetEndDate(new Date());
+    setTargetEndDate(null);
     setOpen(false);
   }
 
