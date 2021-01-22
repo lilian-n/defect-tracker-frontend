@@ -16,6 +16,7 @@ import AdminLayout from "layouts/Admin";
 import SignupForm from "./components/Users/UserSignupForm";
 
 import "./app.css";
+import "react-widgets/dist/css/react-widgets.css";
 
 
 const App = () => {
