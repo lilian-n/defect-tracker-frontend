@@ -80,7 +80,6 @@ const SingleDefect = () => {
               open={formOpen}
               setOpen={setFormOpen}
               defect={defect}
-              user={""}
               projectTitle={projectTitle}
             />
             <DefectInfoDisplay defect={defect} projectTitle={projectTitle} />
