@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useForm, Controller } from "react-hook-form";
@@ -18,42 +18,36 @@ import DateTimePicker from "react-widgets/lib/DateTimePicker"
 
 import { addProject } from "../../redux-store/projectSlice";
 
+
 const AddProjectForm = ({ open, setOpen }) => {
+  // set default values for react hook form
+  const defaultValues = {
+    projectTitle: "",
+    projectDescription: "",
+    projectStartDate: new Date(),
+    projectTargetEndDate: null
+  }
+
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
-  const { register, errors, handleSubmit, control } = useForm();
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [targetEndDate, setTargetEndDate] = useState(null);
-
+  const { register, errors, handleSubmit, control } = useForm({ defaultValues });
 
   function handleClose() {
-    setTitle("");
-    setDescription("");
-    setStartDate(new Date());
-    setTargetEndDate(null);
     setOpen(false);
   }
 
-  function onSubmit() {
-    getAccessTokenSilently()
-      .then(token => {
-        const newValues = {
-          token,
-          title,
-          description,
-          startDate,
-          targetEndDate
-        };
-        dispatch(addProject(newValues))
-      });
+  async function onSubmit(data) {
+    const token = await getAccessTokenSilently();
 
-    setTitle("");
-    setDescription("");
-    setStartDate(new Date());
-    setTargetEndDate(null);
+    const newValues = {
+      token,
+      title: data.projectTitle,
+      description: data.projectDescription,
+      startDate: data.projectStartDate,
+      targetEndDate: data.projectTargetEndDate
+    }
+
+    dispatch(addProject(newValues))
     setOpen(false);
   }
 
@@ -69,9 +63,6 @@ const AddProjectForm = ({ open, setOpen }) => {
             <Input
               type="text"
               name="projectTitle"
-              id="projectTitle"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
               innerRef={register({ required: true })}
             />
             <FormText color="muted">
@@ -84,30 +75,27 @@ const AddProjectForm = ({ open, setOpen }) => {
             <Label for="projectDescription">Project Description</Label>
             <Input
               type="text"
-              name="description"
+              name="projectDescription"
               id="projectDescription"
-              value={description}
-              onChange={e => setDescription(e.target.value)}
               innerRef={register({ required: true })}
             />
             <FormText color="muted">
               Required
             </FormText>
-            <p style={{ color: "red" }}>{errors.description && "Project description is required."}</p>
+            <p style={{ color: "red" }}>{errors.projectDescription && "Project description is required."}</p>
           </FormGroup>
 
           <FormGroup>
-            <Label for="startDatePicker">Project Start Date</Label>
+            <Label for="projectStartDate">Project Start Date</Label>
             <Controller
-              name="startDatePicker"
-              id="startDatePicker"
+              name="projectStartDate"
               control={control}
+              register={register({ required: true })}
               rules={{ required: true }}
-              defaultValue=""
-              render={({ onChange }) =>
+              render={props =>
                 <DateTimePicker
-                  value={startDate}
-                  onChange={value => onChange(setStartDate(value))}
+                  onChange={(e) => props.onChange(e)}
+                  value={props.value}
                   format="MM/DD/YYYY"
                   time={false}
                 />
@@ -116,20 +104,29 @@ const AddProjectForm = ({ open, setOpen }) => {
             <FormText color="muted">
               Required
             </FormText>
-            <p style={{ color: "red" }}>{errors.startDatePicker && "Project start date is required."}</p>
+            <p style={{ color: "red" }}>{errors.projectStartDate && "Project start date is required."}</p>
           </FormGroup>
 
           <FormGroup>
-            <Label for="targetEndDatePicker">Project End Date</Label>
-            <DateTimePicker
-              value={targetEndDate}
-              onChange={value => setTargetEndDate(value)}
-              format="MM/DD/YYYY"
-              time={false}
+            <Label for="projectTargetEndDate">Project Target End Date</Label>
+            <Controller
+              name="projectTargetEndDate"
+              control={control}
+              register={register({ required: true })}
+              rules={{ required: true }}
+              render={props =>
+                <DateTimePicker
+                  onChange={(e) => props.onChange(e)}
+                  value={props.value}
+                  format="MM/DD/YYYY"
+                  time={false}
+                />
+              }
             />
             <FormText color="muted">
               Required
             </FormText>
+            <p style={{ color: "red" }}>{errors.projectTargetEndDate && "Project target end date is required."}</p>
           </FormGroup>
         </ModalBody>
 

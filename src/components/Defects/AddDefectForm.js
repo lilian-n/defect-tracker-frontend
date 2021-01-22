@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useForm, Controller } from "react-hook-form";
@@ -15,54 +15,45 @@ import {
   Row,
   Col
 } from "reactstrap";
-import DatePicker from "../DatePicker";
+import DateTimePicker from "react-widgets/lib/DateTimePicker";
 
 import { addDefect } from "../../redux-store/defectSlice";
 
 const AddDefectForm = ({ open, setOpen, project }) => {
+
+  const defaultValues = {
+    defectSummary: "",
+    defectDescription: "",
+    priority: "",
+    dateIdentified: new Date(),
+    defectTargetResDate: null
+  }
+
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
-  const { register, errors, handleSubmit, control } = useForm();
+  const { register, errors, handleSubmit, control } = useForm({ defaultValues });
 
   const projectId = project.id;
   const projectTitle = project.title;
 
-  const [summary, setSummary] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [dateIdentified, setDateIdentified] = useState(new Date());
-  const [targetResDate, setTargetResDate] = useState(null);
-
   function handleClose() {
-    setSummary("");
-    setDescription("");
-    setPriority("");
-    setDateIdentified(new Date());
-    setTargetResDate(null);
     setOpen(false);
   }
 
-  function onSubmit() {
-    getAccessTokenSilently()
-      .then(token => {
-        const newValues = {
-          token,
-          summary,
-          description,
-          priority,
-          dateIdentified,
-          targetResDate,
-          projectId
-        }
+  async function onSubmit(data) {
+    const token = await getAccessTokenSilently();
 
-        dispatch(addDefect(newValues));
-      });
+    const newValues = {
+      token,
+      summary: data.defectSummary,
+      description: data.defectDescription,
+      priority: data.priority,
+      dateIdentified: data.dateIdentified,
+      targetResDate: data.defectTargetResDate,
+      projectId: projectId
+    }
 
-    setSummary("");
-    setDescription("");
-    setPriority("");
-    setDateIdentified(new Date());
-    setTargetResDate(null);
+    dispatch(addDefect(newValues));
     setOpen(false);
   }
 
@@ -92,14 +83,9 @@ const AddDefectForm = ({ open, setOpen, project }) => {
                 <Input
                   type="text"
                   name="defectSummary"
-                  id="defectSummary"
-                  value={summary}
-                  onChange={e => setSummary(e.target.value)}
                   innerRef={register({ required: true })}
                 />
-                <FormText color="muted">
-                  Required
-                </FormText>
+                <FormText color="muted"> Required </FormText>
                 <p style={{ color: "red" }}>{errors.defectSummary && "Defect summary is required."}</p>
               </FormGroup>
             </Col>
@@ -110,9 +96,7 @@ const AddDefectForm = ({ open, setOpen, project }) => {
                 <Input
                   type="textarea"
                   name="defectDescription"
-                  id="defectDescription"
-                  value={description}
-                  onChange={e => setDescription(e.target.value)}
+                  innerRef={register()}
                 />
               </FormGroup>
             </Col>
@@ -121,10 +105,22 @@ const AddDefectForm = ({ open, setOpen, project }) => {
               {/** This field is required as well */}
               <FormGroup>
                 <b><Label for="dateIdentified">Date Identified</Label></b>
-                <DatePicker id="dateIdentified" date={dateIdentified} setDate={setDateIdentified} />
-                <FormText color="muted">
-                  Required
-                </FormText>
+                <Controller
+                  name="dateIdentified"
+                  control={control}
+                  register={register({ required: true })}
+                  rules={{ required: true }}
+                  render={props =>
+                    <DateTimePicker
+                      value={props.value}
+                      onChange={(e) => props.onChange(e)}
+                      format="MM/DD/YYYY"
+                      time={false}
+                    />
+                  }
+                />
+                <FormText color="muted"> Required </FormText>
+                <p style={{ color: "red" }}>{errors.dateIdentified && "Date identified is required."}</p>
               </FormGroup>
             </Col>
 
@@ -134,9 +130,7 @@ const AddDefectForm = ({ open, setOpen, project }) => {
                 <Input
                   type="select"
                   name="priority"
-                  id="priority"
-                  value={priority}
-                  onChange={e => setPriority(e.target.value)}
+                  innerRef={register()}
                 >
                   <option value="">None</option>
                   <option value="Low">Low</option>
@@ -149,8 +143,20 @@ const AddDefectForm = ({ open, setOpen, project }) => {
 
             <Col xs="12">
               <FormGroup>
-                <b><Label for="defectTargetDate">Target Resolution Date</Label></b>
-                <DatePicker id="defectTargetDate" date={targetResDate} setDate={setTargetResDate} />
+                <b><Label for="defectTargetResDate">Target Resolution Date</Label></b>
+                <Controller
+                  name="defectTargetResDate"
+                  control={control}
+                  register={register()}
+                  render={props =>
+                    <DateTimePicker
+                      value={props.value}
+                      onChange={(e) => props.onChange(e)}
+                      format="MM/DD/YYYY"
+                      time={false}
+                    />
+                  }
+                />
               </FormGroup>
             </Col>
           </Row>

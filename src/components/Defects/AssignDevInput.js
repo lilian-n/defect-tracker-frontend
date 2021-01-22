@@ -4,14 +4,14 @@ import Select from "react-select";
 
 import { selectAllUsers } from "../../redux-store/userSlice";
 
-const AssignDevInput = ({ selection, setSelection }) => {
+const AssignDevInput = ({ value, onChange, devId }) => {
   const users = useSelector(state => selectAllUsers(state));
   const mappedUsers = users.map(u => {
     return { value: u.id, label: u.name }
   })
 
   return (
-    <Select value={selection} options={mappedUsers} onChange={setSelection} />
+    <Select defaultValue={devId} value={value} options={mappedUsers} onChange={onChange} />
   )
 }
 

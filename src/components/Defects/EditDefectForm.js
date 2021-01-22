@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useForm, Controller } from "react-hook-form";
@@ -9,59 +9,60 @@ import {
   ModalFooter,
   Button,
   FormGroup,
+  FormText,
   Label,
   Input,
   Row,
   Col
 } from "reactstrap";
-import DatePicker from "../DatePicker";
+import DateTimePicker from "react-widgets/lib/DateTimePicker";
 
 import { updateDefect } from "../../redux-store/defectSlice";
 
 import AssignDevInput from "./AssignDevInput";
 
-const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
+const EditDefectForm = ({ open, setOpen, defect, projectTitle }) => {
+  // set default values for react hook form 
+  const defaultValues = {
+    defectSummary: defect.summary,
+    defectDescription: defect.description,
+    assignedDev: defect.assignedDevId,
+    defectStatus: defect.status,
+    defectPriority: defect.priority,
+    defectProgress: defect.progress,
+    dateIdentified: new Date(defect.dateIdentified),
+    defectTargetResDate: defect.targetResDate ? new Date(defect.targetResDate) : null,
+    defectActualResDate: defect.actualResDate ? new Date(defect.actualResDate) : null
+  }
+
   const dispatch = useDispatch();
   const { getAccessTokenSilently } = useAuth0();
-  const { register, errors, handleSubmit } = useForm();
-
-  const [summary, setSummary] = useState(defect.summary);
-  const [description, setDescription] = useState(defect.description);
-  const [status, setStatus] = useState(defect.status);
-  const [dev, setDev] = useState(defect.assignedDevId);
-  const [priority, setPriority] = useState(defect.priority);
-  const [dateIdentified, setDateIdentified] = useState(new Date(defect.dateIdentified));
-  const [targetResDate, setTargetResDate] = useState(new Date(defect.targetResDate));
-  const [actualEndDate, setActualEndDate] = useState(defect.actualEndDate);
-  const [progress, setProgress] = useState(defect.progress);
-
-  // Also need to add developer, identifier information
+  const { register, errors, handleSubmit, control } = useForm({ defaultValues });
 
   function handleClose() {
-    // Needs to reset fields
     setOpen(false);
   }
 
-  function onSubmit() {
-    const devInput = dev ? dev.value : null;
+  async function onSubmit(data) {
+    const token = await getAccessTokenSilently();
 
-    getAccessTokenSilently()
-      .then(token => {
-        const updateValues = {
-          id: defect.id,
-          token,
-          summary,
-          description,
-          assignedDevId: devInput,
-          status,
-          priority,
-          dateIdentified,
-          targetResDate,
-          actualEndDate,
-          progress
-        };
-        dispatch(updateDefect(updateValues));
-      });
+    // extract dev id from dev object
+    const devInput = data.assignedDev ? data.assignedDev.value : null;
+    const updateValues = {
+      token,
+      id: defect.id,
+      summary: data.defectSummary,
+      description: data.defectDescription,
+      assignedDevId: devInput,
+      status: data.defectStatus,
+      priority: data.defectPriority,
+      dateIdentified: data.dateIdentified,
+      targetResDate: data.defectTargetResDate,
+      actualResDate: data.defectActualResDate,
+      progress: data.progress
+    }
+
+    dispatch(updateDefect(updateValues));
     setOpen(false);
   }
 
@@ -78,11 +79,9 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
                 <Input
                   type="text"
                   name="defectSummary"
-                  id="defectSummary"
-                  value={summary}
-                  onChange={e => setSummary(e.target.value)}
                   innerRef={register({ required: true })}
                 />
+                <FormText color="muted"> Required </FormText>
                 <p style={{ color: "red" }}>{errors.defectSummary && "Summary is required."}</p>
               </FormGroup>
             </Col>
@@ -103,7 +102,18 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
             <Col md="6" lg="4">
               <FormGroup>
                 <b><Label for="assignedDev">Assigned Developer</Label></b>
-                <AssignDevInput selection={dev} setSelection={setDev} />
+                <Controller
+                  name="assignedDev"
+                  control={control}
+                  register={register({ required: true })}
+                  render={props =>
+                    <AssignDevInput
+                      value={props.value}
+                      onChange={props.onChange}
+                      devId={defect.assignedDevId}
+                    />
+                  }
+                />
               </FormGroup>
             </Col>
           </Row>
@@ -115,9 +125,6 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
                 <Input
                   type="select"
                   name="defectStatus"
-                  id="defectStatus"
-                  value={status}
-                  onChange={e => setStatus(e.target.value)}
                   innerRef={register({ required: true })}
                 >
                   <option value="OPEN">OPEN</option>
@@ -133,9 +140,7 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
                 <Input
                   type="select"
                   name="priority"
-                  id="priority"
-                  value={priority}
-                  onChange={e => setPriority(e.target.value)}
+                  innerRef={register()}
                 >
                   <option value="">None</option>
                   <option value="Low">Low</option>
@@ -162,24 +167,62 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
 
           <Row>
             <Col>
-              {/* required input here */}
               <FormGroup>
                 <b><Label for="dateIdentified">Date Identified</Label></b>
-                <DatePicker id="dateIdentified" date={dateIdentified} setDate={setDateIdentified} />
+                <Controller
+                  name="dateIdentified"
+                  control={control}
+                  register={register({ required: true })}
+                  rules={{ required: true }}
+                  render={props =>
+                    <DateTimePicker
+                      value={props.value}
+                      onChange={(e) => props.onChange(e)}
+                      format="MM/DD/YYYY"
+                      time={false}
+                    />
+                  }
+                />
+                <FormText color="muted"> Required </FormText>
+                <p style={{ color: "red" }}>{errors.dateIdentified && "Date identified is required."}</p>
               </FormGroup>
             </Col>
 
             <Col md="6" lg="4">
               <FormGroup>
-                <b><Label for="defectTargetDate">Target Resolution Date</Label></b>
-                <DatePicker id="defectTargetDate" date={targetResDate} setDate={setTargetResDate} />
+                <b><Label for="defectTargetResDate">Target Resolution Date</Label></b>
+                <Controller
+                  name="defectTargetResDate"
+                  control={control}
+                  register={register()}
+                  render={props =>
+                    <DateTimePicker
+                      value={props.value}
+                      onChange={(e) => props.onChange(e)}
+                      format="MM/DD/YYYY"
+                      time={false}
+                    />
+                  }
+                />
               </FormGroup>
             </Col>
 
             <Col md="12" lg="4">
               <FormGroup>
-                <b><Label for="defectEndDate">Actual End Date</Label></b>
-                <DatePicker id="defectEndDate" date={actualEndDate} setDate={setActualEndDate} />
+                <b><Label for="defectActualResDate">Actual Resolution Date</Label></b>
+                <Controller
+                  name="defectActualResDate"
+                  control={control}
+                  register={register()}
+                  render={props =>
+                    <DateTimePicker
+                      value={props.value}
+                      onChange={(e) => props.onChange(e)}
+                      format="MM/DD/YYYY"
+                      time={false}
+                    />
+                  }
+                />
               </FormGroup>
             </Col>
           </Row>
@@ -191,22 +234,18 @@ const EditDefectForm = ({ open, setOpen, defect, users, projectTitle }) => {
                 <Input
                   type="textarea"
                   name="defectDescription"
-                  id="defectDescription"
-                  value={description}
-                  onChange={e => setDescription(e.target.value)}
+                  innerRef={register()}
                 />
               </FormGroup>
             </Col>
 
             <Col xs="12">
               <FormGroup>
-                <b><Label for="progress">Progress</Label></b>
+                <b><Label for="defectProgress">Progress</Label></b>
                 <Input
                   type="textarea"
                   name="progress"
-                  id="progress"
-                  value={progress}
-                  onChange={e => setProgress(e.target.value)}
+                  innerRef={register()}
                 />
               </FormGroup>
             </Col>
