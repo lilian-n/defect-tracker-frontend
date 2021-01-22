@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import PerfectScrollbar from "perfect-scrollbar";
 import { Switch, useHistory } from "react-router-dom";
