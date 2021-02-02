@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
 
 import PerfectScrollbar from "perfect-scrollbar";
-import { Switch, useHistory } from "react-router-dom";
+import { Switch, useHistory, Route } from "react-router-dom";
 
 import ProtectedRoute from "auth/ProtectedRoute";
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
+import NotFound from "views/NotFound";
 
 import { dashboardRoutes, individualRoutes } from "../routes";
 
@@ -48,6 +49,7 @@ const Dashboard = (props) => {
               />
             );
           })}
+          <Route component={NotFound} />
         </Switch>
         <Footer fluid />
       </div>
