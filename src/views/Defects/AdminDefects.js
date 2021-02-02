@@ -21,6 +21,7 @@ const AdminDefects = () => {
   const mutableDefects = _.cloneDeep(defects);
 
   const [formOpen, setFormOpen] = useState(false);
+  const projectTitle = project ? project.title : "";
 
   useEffect(() => {
     if (filter !== "NONE") {
@@ -72,7 +73,7 @@ const AdminDefects = () => {
           />
           <DefectTable
             data={mutableDefects}
-            projectTitle={project.title}
+            projectTitle={projectTitle}
           />
         </Col>
       </Row>
