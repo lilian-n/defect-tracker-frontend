@@ -84,7 +84,7 @@ const SingleProject = () => {
           <Col className="d-flex justify-content-center">
             {
               id === 1
-                ? <p>Delete has been disabled for this project in order to preserve demo data. A new project can be created and deleted to test the feature.</p>
+                ? <p>Delete has been disabled for this project in order to preserve demo data. Create a new project to test the feature.</p>
                 : <div></div>
             }
           </Col>
