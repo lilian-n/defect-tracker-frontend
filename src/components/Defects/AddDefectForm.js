@@ -33,8 +33,8 @@ const AddDefectForm = ({ open, setOpen, project }) => {
   const { getAccessTokenSilently } = useAuth0();
   const { register, errors, handleSubmit, control } = useForm({ defaultValues });
 
-  const projectId = project.id;
-  const projectTitle = project.title;
+  const projectId = project ? project.id : null;
+  const projectTitle = project ? project.title : "";
 
   function handleClose() {
     setOpen(false);
@@ -102,7 +102,6 @@ const AddDefectForm = ({ open, setOpen, project }) => {
             </Col>
 
             <Col xs="12">
-              {/** This field is required as well */}
               <FormGroup>
                 <b><Label for="dateIdentified">Date Identified</Label></b>
                 <Controller
