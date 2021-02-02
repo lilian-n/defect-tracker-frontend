@@ -10,11 +10,14 @@ const DefectTable = ({ data, projectTitle }) => (
       {
         title: "Id",
         field: "id",
-        maxWidth: 50,
-        render: rowData => <Link to={`defects/${rowData.id}`}>{rowData.id}</Link>,
+        maxWidth: 50
       },
       { title: "Status", field: "status", maxWidth: 70 },
-      { title: "Summary", field: "summary" },
+      {
+        title: "Summary",
+        field: "summary",
+        render: rowData => <Link to={`defects/${rowData.id}`}>{rowData.summary}</Link>,
+      },
       { title: "Priority", field: "priority", maxWidth: 70 },
       { title: "Identifier", field: "identifierId" },
       { title: "Assigned Developer", field: "assignedDevId" },
