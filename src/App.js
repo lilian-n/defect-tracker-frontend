@@ -12,6 +12,7 @@ import { fetchAllUsers } from "redux-store/userSlice";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Loading from "./components/Loading"
 import Home from "views/Home";
+import NotFound from "views/NotFound";
 import AdminLayout from "layouts/Admin";
 import SignupForm from "./components/Users/UserSignupForm";
 
@@ -49,6 +50,7 @@ const App = () => {
         <Route exact path="/" component={Home} />;
         <Route exact path="/signup" role={authUser.role} component={SignupForm} />
         <ProtectedRoute path="/admin" role={authUser.role} component={AdminLayout} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
