@@ -1,4 +1,4 @@
-const defectFilterReducer = (state = "NONE", action) => {
+const defectFilterReducer = (state = "1", action) => {
   switch (action.type) {
     case "SET_FILTER":
       return action.project;
