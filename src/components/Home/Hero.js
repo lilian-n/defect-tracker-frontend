@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Container } from 'reactstrap';
+import { Link } from "react-router-dom";
+import { Container, Button } from 'reactstrap';
 
 import LoginButton from "../../auth/LoginButton";
 import SignupButton from "auth/SignupButton";
@@ -9,7 +10,11 @@ const Hero = (props) => {
   const { isAuthenticated } = useAuth0();
 
   let content = isAuthenticated
-    ? <div></div>
+    ? <div>
+      <Link to="/admin/dashboard">
+        <Button color="primary">Go to Dashboard</Button>
+      </Link>
+    </div>
     : <div>
       <SignupButton />
       <LoginButton />
@@ -25,9 +30,9 @@ const Hero = (props) => {
         />
         <h1 className="display-3 text-center">Demo Defect Tracker</h1>
         <h2 className="lead text-center"><b>Track, manage, and maintain defects for all your software applications.</b></h2>
-        <p className="lead text-center">
+        <div className="lead text-center">
           {content}
-        </p>
+        </div>
       </Container>
     </div>
   );
