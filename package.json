@@ -35,6 +35,7 @@
     "react-widgets": "^4.6.1",
     "react-widgets-moment": "^4.0.30",
     "reactstrap": "8.4.1",
+    "recharts": "^2.0.4",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "typescript": "3.9.5"
