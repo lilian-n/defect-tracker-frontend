@@ -82,11 +82,21 @@ const SingleProject = () => {
         </Row>
         <Row>
           <Col className="d-flex justify-content-center">
+            {
+              id === 1
+                ? <p>Delete has been disabled for this project in order to preserve demo data. A new project can be created and deleted to test the feature.</p>
+                : <div></div>
+            }
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center">
             <Button
               color="danger"
               onClick={() => setDelModalOpen(true)}
               size="sm"
               style={{ height: 40 }}
+              disabled={id === 1 ? true : false}
             >
               Delete Project
             </Button>
