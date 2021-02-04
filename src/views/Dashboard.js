@@ -45,7 +45,6 @@ const Dashboard = () => {
   const project = useSelector(state => selectProjectById(state, filter));
   const defects = useSelector(selectDefectsByProjectId(filter));
   const statusCount = defectStatusCount(defects);
-  console.log("🚀 ~ file: Dashboard.js ~ line 50 ~ Dashboard ~ defects", defects)
 
   let projectTitle = project ? project.title : "";
 

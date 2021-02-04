@@ -23,13 +23,14 @@ import AssignDevInput from "./AssignDevInput";
 
 const EditDefectForm = ({ open, setOpen, defect, projectTitle }) => {
   // set default values for react hook form 
+  console.log(defect)
   const defaultValues = {
     defectSummary: defect.summary,
     defectDescription: defect.description,
     assignedDev: defect.assignedDevId,
     defectStatus: defect.status,
     defectPriority: defect.priority,
-    defectProgress: defect.progress,
+    progress: defect.progress,
     dateIdentified: new Date(defect.dateIdentified),
     defectTargetResDate: defect.targetResDate ? new Date(defect.targetResDate) : null,
     defectActualResDate: defect.actualResDate ? new Date(defect.actualResDate) : null
@@ -62,6 +63,7 @@ const EditDefectForm = ({ open, setOpen, defect, projectTitle }) => {
       progress: data.progress
     }
 
+    console.log('update', updateValues)
     dispatch(updateDefect(updateValues));
     setOpen(false);
   }
@@ -136,10 +138,10 @@ const EditDefectForm = ({ open, setOpen, defect, projectTitle }) => {
 
             <Col md="6" lg="4">
               <FormGroup>
-                <b><Label for="priority">Priority</Label></b>
+                <b><Label for="defectPriority">Priority</Label></b>
                 <Input
                   type="select"
-                  name="priority"
+                  name="defectPriority"
                   innerRef={register()}
                 >
                   <option value="">None</option>
@@ -241,7 +243,7 @@ const EditDefectForm = ({ open, setOpen, defect, projectTitle }) => {
 
             <Col xs="12">
               <FormGroup>
-                <b><Label for="defectProgress">Progress</Label></b>
+                <b><Label for="progress">Progress</Label></b>
                 <Input
                   type="textarea"
                   name="progress"
