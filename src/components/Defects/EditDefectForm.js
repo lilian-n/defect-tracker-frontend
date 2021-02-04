@@ -63,7 +63,6 @@ const EditDefectForm = ({ open, setOpen, defect, projectTitle }) => {
       progress: data.progress
     }
 
-    console.log('update', updateValues)
     dispatch(updateDefect(updateValues));
     setOpen(false);
   }

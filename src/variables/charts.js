@@ -56,8 +56,6 @@ export const defectCountInPastSixMonths = (defects, currentDate) => {
     let lastSixMonths = new Map();
     lastSixMonths.set(dateToIterate.monthYear, 0);
 
-    console.log(dateToIterate);
-
     for (let i = 0; i < 5; i++) {
       dateToIterate = getPreviousMonth(dateToIterate.date.month(), dateToIterate.date.year());
       lastSixMonths.set(dateToIterate.monthYear, 0)
