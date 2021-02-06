@@ -85,11 +85,13 @@ Within the download you'll find the following directories and files:
             │       ├── custom
             │       └── react-differences.scss
             └── paper-dashboard.scss
-```
 
-
-
-
+### Folder Descriptions
+**auth**: Files and components related to Auth0 and authentication.
+**components**: Within folder, files grouped by features.
+**redux-store**: Contains files related to state management.
+**services**: Contains files related to communication with backend API.
+**views**: Contains all of the "pages" of the application. Files grouped by features.
 
 
 
