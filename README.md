@@ -1,19 +1,19 @@
 # Defect Tracker
+https://immense-coast-76928.herokuapp.com/
+## Description
+Store, manage, and track defects + defect fixes for your software application.
 
 ## File Structure
 
 Within the download you'll find the following directories and files:
 
 ```
-├── CHANGELOG.md
-├── ISSUE_TEMPLATE.md
 ├── LICENSE.md
 ├── README.md
-├── docs
-│   └── documentation.html
 ├── jsconfig.json
 ├── package.json
 ├── public
+│   ├── apple-icon.png
 │   ├── favicon.ico
 │   ├── index.html
 │   └── manifest.json
@@ -22,30 +22,50 @@ Within the download you'll find the following directories and files:
     ├── logo-white.svg
     ├── logo.svg
     ├── routes.js
+    ├── auth
+    │   ├── Auth0ProviderWithHistory.js
+    │   ├── LoginButton.js
+    │   ├── LogoutButton.js
+    │   ├── ProtectedRoute.js
+    │   └── SignupButton.js
     ├── components
+    │   ├── Defects
     │   ├── FixedPlugin
-    │   │   └── FixedPlugin.jsx
     │   ├── Footer
-    │   │   └── Footer.jsx
+    │   ├── Home
     │   ├── Navbars
-    │   │   └── DemoNavbar.jsx
+    │   ├── Projects
     │   └── Sidebar
-    │       └── Sidebar.jsx
+    │   ├── Users
+    │   ├── Can.js
+    │   ├── datePicker.js
+    │   └── Loading.js
     ├── layouts
-    │   └── Admin.jsx
+    │   └── Admin.js
+    ├── redux-store
+    │   ├── authUserSlice.js
+    │   ├── defectFilterReducer.js
+    │   ├── defectSlice.js
+    │   ├── helperFunctions.js
+    │   ├── projectSlice.js
+    │   ├── schemas.js
+    │   ├── store.js
+    │   └── userSlice.js
     ├── variables
-    │   ├── charts.jsx
-    │   ├── general.jsx
-    │   └── icons.jsx
+    │   ├── charts.js
+    │   └── icons.js
+    ├── services
+    │   ├── constants.js
+    │   ├── defects.js
+    │   ├── projects.js
+    │   └── users.js
     ├── views
-    │   ├── Dashboard.jsx
-    │   ├── Icons.jsx
-    │   ├── Map.jsx
-    │   ├── Notifications.jsx
-    │   ├── Tables.jsx
-    │   ├── Typography.jsx
-    │   ├── Upgrade.jsx
-    │   └── User.jsx
+    │   ├── Defects
+    │   ├── Projects
+    │   ├── Users
+    │   ├── Dashboard.js
+    │   ├── Home.js
+    │   └── NotFound.js
     └── assets
         ├── css
         │   ├── paper-dashboard.css
