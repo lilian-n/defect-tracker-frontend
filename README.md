@@ -85,6 +85,7 @@ Within the download you'll find the following directories and files:
             │       ├── custom
             │       └── react-differences.scss
             └── paper-dashboard.scss
+```
 
 ### Folder Descriptions
 **auth**: Files and components related to Auth0 and authentication.
