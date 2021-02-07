@@ -1,12 +1,24 @@
 # Defect Tracker
+**Live Demo**  
 https://immense-coast-76928.herokuapp.com/
+
 ## Description
-Store, manage, and track defects + defect fixes for your software application.
+A web application to store and manage defects. You can create projects and defects related to each project, along with assigning developers to fix defects.
 
-## File Structure
+## Installation
+Refer to the live demo to see it running, or clone to view my code. 
 
-Within the download you'll find the following directories and files:
+## Technologies Used
+- React 17
+- Redux 4.0.5
+- Redux-Thunk 2.3
+- Redux JS Toolkit 1.5
+- React Bootstrap 8.4.1
+- Recharts 2.0.4  
+  
+Used the Paper Dashboard, a Bootstrap 4 based admin template from Creative Tim.
 
+## Directory
 ```
 ├── LICENSE.md
 ├── README.md
